@@ -118,8 +118,8 @@ function validateHSN(hsn: string): Record<string, unknown> {
 }
 
 async function lookupRegulation(query: string, corridor: string): Promise<Record<string, unknown>> {
-  const supabaseUrl = Deno.env.get("SUPABASE_URL");
-  const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  const supabaseUrl = Deno.env.get("SUPA_URL");
+  const supabaseServiceRoleKey = Deno.env.get("SUPA_SECRET");
 
   if (!supabaseUrl || !supabaseServiceRoleKey) {
     return {
@@ -217,10 +217,23 @@ async function callGeminiWithRetry(
   includeTools: boolean,
   streaming: boolean,
 ): Promise<Response> {
+  // Try each key in the pool until one works
+  const allKeys = [
+    Deno.env.get("GEMINI_API_KEY"), Deno.env.get("GEMINI_API_KEY_2"),
+    Deno.env.get("GEMINI_API_KEY_3"), Deno.env.get("GEMINI_API_KEY_4"),
+    Deno.env.get("GEMINI_API_KEY_5"), Deno.env.get("GEMINI_API_KEY_6"),
+    Deno.env.get("GEMINI_API_KEY_7"), Deno.env.get("GEMINI_API_KEY_8"),
+    Deno.env.get("GEMINI_API_KEY_9"), Deno.env.get("GEMINI_API_KEY_10"),
+    Deno.env.get("GEMINI_API_KEY_11"),
+  ].filter(Boolean) as string[];
+  const startIdx = Math.floor(Date.now() / 60000) % allKeys.length;
   let response = await callGemini(apiKey, contents, includeTools, streaming);
   if (response.status === 429) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    response = await callGemini(apiKey, contents, includeTools, streaming);
+    for (let i = 1; i < allKeys.length; i++) {
+      const fallbackKey = allKeys[(startIdx + i) % allKeys.length];
+      response = await callGemini(fallbackKey, contents, includeTools, streaming);
+      if (response.status !== 429) break;
+    }
   }
   return response;
 }
@@ -230,14 +243,20 @@ serve(async (req: Request) => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  const keys = [Deno.env.get("GEMINI_API_KEY"), Deno.env.get("GEMINI_API_KEY_2")].filter(Boolean) as string[];
+  const keys = [
+    Deno.env.get("GEMINI_API_KEY"), Deno.env.get("GEMINI_API_KEY_2"),
+    Deno.env.get("GEMINI_API_KEY_3"), Deno.env.get("GEMINI_API_KEY_4"),
+    Deno.env.get("GEMINI_API_KEY_5"), Deno.env.get("GEMINI_API_KEY_6"),
+    Deno.env.get("GEMINI_API_KEY_7"), Deno.env.get("GEMINI_API_KEY_8"),
+    Deno.env.get("GEMINI_API_KEY_9"), Deno.env.get("GEMINI_API_KEY_10"),
+    Deno.env.get("GEMINI_API_KEY_11"),
+  ].filter(Boolean) as string[];
   if (keys.length === 0) {
     return new Response(JSON.stringify({ error: "API key not configured" }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
-  // Pick key based on minute — simple time-based rotation
   const apiKey = keys[Math.floor(Date.now() / 60000) % keys.length];
 
   try {
