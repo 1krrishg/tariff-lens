@@ -295,6 +295,13 @@ export default function ChatPage() {
     setConversations(data || []);
   };
 
+  const deleteConversation = async (convId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    await supabase.from("conversations").delete().eq("id", convId);
+    setConversations(prev => prev.filter(c => c.id !== convId));
+    if (conversationId === convId) navigate("/chat");
+  };
+
   const fetchMessages = async (convId: string) => {
     const { data } = await supabase.from("messages").select("*").eq("conversation_id", convId).order("created_at", { ascending: true });
     setMessages((data as Message[]) || []);
@@ -670,11 +677,18 @@ export default function ChatPage() {
             <p className="text-xs text-muted-foreground px-3 py-2">No conversations yet</p>
           )}
           {conversations.map(conv => (
-            <button key={conv.id} onClick={() => { navigate(`/chat/${conv.id}`); setMobileSidebarOpen(false); }}
-              className={`w-full text-left rounded-lg px-3 py-2.5 transition-colors hover:bg-accent hover:text-accent-foreground ${conv.id === conversationId ? "bg-accent text-accent-foreground" : "text-muted-foreground"}`}>
-              <div className="truncate text-sm font-medium">{conv.title}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">{formatDate(conv.created_at)}</div>
-            </button>
+            <div key={conv.id} className={`group relative flex items-center rounded-lg transition-colors hover:bg-accent ${conv.id === conversationId ? "bg-accent" : ""}`}>
+              <button onClick={() => { navigate(`/chat/${conv.id}`); setMobileSidebarOpen(false); }}
+                className="flex-1 text-left px-3 py-2.5 min-w-0">
+                <div className={`truncate text-sm font-medium ${conv.id === conversationId ? "text-accent-foreground" : "text-muted-foreground"}`}>{conv.title}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{formatDate(conv.created_at)}</div>
+              </button>
+              <button onClick={(e) => deleteConversation(conv.id, e)}
+                className="opacity-0 group-hover:opacity-100 mr-2 p-1 rounded hover:bg-destructive/20 hover:text-destructive text-muted-foreground transition-all shrink-0"
+                title="Delete conversation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+              </button>
+            </div>
           ))}
         </div>
       </ScrollArea>
