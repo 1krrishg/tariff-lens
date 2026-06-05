@@ -304,7 +304,19 @@ export default function ChatPage() {
 
   const fetchMessages = async (convId: string) => {
     const { data } = await supabase.from("messages").select("*").eq("conversation_id", convId).order("created_at", { ascending: true });
-    setMessages((data as Message[]) || []);
+    const msgs = (data as Message[]) || [];
+    setMessages(msgs);
+
+    // Restore extracted data from shipments table so agent has context on reload
+    const { data: shipment } = await supabase
+      .from("shipments")
+      .select("extracted_data")
+      .eq("conversation_id", convId)
+      .maybeSingle();
+    if (shipment?.extracted_data) {
+      setLastExtractedData(shipment.extracted_data as Record<string, any>);
+      setLatestExtracted(shipment.extracted_data as LorryReceiptData);
+    }
   };
 
   const insertMessage = async (convId: string, role: "user" | "assistant", content: string): Promise<Message | null> => {
