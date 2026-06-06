@@ -8,10 +8,10 @@ export function FinalCTA() {
       <div className="container mx-auto px-5 sm:px-6">
         <div className="max-w-2xl">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground leading-[1.1] mb-5">
-            Verify your next shipment before it costs you.
+            Next shipment to Nepal? Have the bilty ready before the truck is.
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground mb-8">
-            Upload your documents. Get a clean Lorry Receipt and a clear risk report — in seconds.
+            Upload your invoice, packing list, LC, and e-way bill. Get a verified bilty and a full risk report — in under 30 seconds.
           </p>
           <Button
             asChild

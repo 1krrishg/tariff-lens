@@ -6,15 +6,15 @@ import { AlertCircle, AlertTriangle } from "lucide-react";
  */
 
 const examples = [
-  { sev: "high", title: "Weight mismatch", detail: "LR 12,400 kg · Invoice 11,800 kg" },
-  { sev: "high", title: "Value exceeds LC limit", detail: "₹ 8,42,000 vs LC ₹ 8,00,000" },
-  { sev: "high", title: "Vehicle number reused", detail: "MH-04-AB-7821 on LR-2802 (3 days ago)" },
-  { sev: "med", title: "GSTIN check digit invalid", detail: "27AAACR5055K1Z5 — failed Mod-36" },
-  { sev: "med", title: "Consignee address incomplete", detail: "Missing PIN / postal code on invoice" },
-  { sev: "med", title: "HSN code mismatch", detail: "Invoice 5402.33 · Packing list 5403.31" },
-  { sev: "med", title: "E-way bill expiring soon", detail: "Valid till 09 Nov · ETA 11 Nov" },
-  { sev: "med", title: "Invoice number missing", detail: "Blank on copy 2 of invoice PDF" },
-  { sev: "high", title: "Round-figure invoice value", detail: "₹ 8,00,000 exact — under-invoicing pattern" },
+  { sev: "high", title: "Weight mismatch", detail: "Packing list 7,540 kg · Invoice 7,200 kg" },
+  { sev: "high", title: "LC value exceeded", detail: "Invoice ₹ 6,91,080 · LC limit ₹ 6,50,000" },
+  { sev: "high", title: "E-way bill expired at border", detail: "Valid till 24 Nov · Truck arrived 26 Nov" },
+  { sev: "med", title: "Notify party IEC missing", detail: "Shree Chemicals — no EXIM code in LC" },
+  { sev: "med", title: "GSTIN check digit invalid", detail: "19AABCR4892M1ZK — failed Mod-36" },
+  { sev: "med", title: "HSN mismatch across docs", detail: "Invoice 2811.22 · Packing list 2811.29" },
+  { sev: "med", title: "LUT ARN not on invoice", detail: "Zero-rated export — ARN mandatory" },
+  { sev: "med", title: "Consignee set to importer", detail: "LC present — must be To The Order Of bank" },
+  { sev: "high", title: "Round-figure under-invoicing", detail: "₹ 6,00,000 exact — pattern flagged" },
 ] as const;
 
 export function RiskGallery() {
@@ -26,10 +26,10 @@ export function RiskGallery() {
             What gets flagged
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground leading-[1.1] mb-3">
-            Real issues. Caught before dispatch.
+            The errors that get trucks held at the border.
           </h2>
           <p className="text-muted-foreground text-base sm:text-lg">
-            A sample of the 40+ checks Ability runs on every shipment.
+            40+ checks run on every India-Nepal, India-Bhutan, and India-Bangladesh shipment.
           </p>
         </div>
 

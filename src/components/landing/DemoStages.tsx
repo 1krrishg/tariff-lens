@@ -19,7 +19,7 @@ export function DemoStages() {
             How it works
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-foreground leading-[1.1]">
-            Documents in. Verified Lorry Receipt out.
+            Upload docs. Get a clean bilty. Know what's wrong.
           </h2>
         </div>
 
@@ -68,10 +68,10 @@ function StageHeader({
 /* ---------------- STAGE 1: Upload ---------------- */
 function Stage1Upload() {
   const docs = [
-    { name: "invoice_2847.pdf", tag: "Invoice", icon: FileText },
+    { name: "RRPL_invoice.pdf", tag: "Commercial invoice", icon: FileText },
     { name: "packing_list.pdf", tag: "Packing list", icon: FileText },
     { name: "eway_bill.jpg", tag: "E-way bill", icon: FileText },
-    { name: "lc_001.pdf", tag: "Letter of credit", icon: FileText },
+    { name: "lc_nic_asia.pdf", tag: "Letter of credit", icon: FileText },
   ];
   return (
     <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-[var(--shadow-card)]">
@@ -103,25 +103,25 @@ function Stage1Upload() {
 /* ---------------- STAGE 2: Extract ---------------- */
 function Stage2Extract() {
   const fields: Array<[string, string, string]> = [
-    ["LR number", "LR-2847", "LR"],
-    ["Date", "08 Nov 2024", "LR"],
-    ["Consignor", "Reliance Industries Ltd", "Invoice"],
-    ["Consignor GSTIN", "27AAACR5055K1Z5", "Invoice"],
-    ["Consignee", "Padma Textiles, Dhaka", "Invoice"],
-    ["Vehicle", "MH-04-AB-7821", "E-way"],
-    ["Goods", "Polyester yarn", "Packing"],
-    ["HSN", "5402.33", "Invoice"],
-    ["Packages", "248 bags", "Packing"],
-    ["Weight (gross)", "12,400 kg", "Packing"],
-    ["Invoice value", "₹ 8,42,000", "Invoice"],
-    ["LC reference", "LC-DH-44218", "LC"],
+    ["LR number", "011 / RRPL-1016", "LR"],
+    ["Date", "22 Nov 2025", "LR"],
+    ["Consignor", "Ratnaka Resins Pvt. Ltd., Burdwan", "Invoice"],
+    ["Consignor GSTIN", "19AABCR4892M1ZK", "Invoice"],
+    ["Consignee", "To The Order Of NIC Asia Bank", "LC"],
+    ["Notify party", "Shree Chemicals, Birgunj, Nepal", "LC"],
+    ["Vehicle", "DL-01-AB-4421", "E-way"],
+    ["Goods", "Microsilica GR-92 (Silicon Dioxide)", "Packing"],
+    ["HSN", "2811.22.00", "Invoice"],
+    ["Packages", "301 bags · 25 kg each", "Packing"],
+    ["Gross weight", "7,540 kg", "Packing"],
+    ["Invoice value", "₹ 6,91,080", "Invoice"],
   ];
   return (
     <div className="rounded-xl border border-border bg-card p-4 sm:p-6 shadow-[var(--shadow-card)]">
       <StageHeader
         step="02 · Extract & generate"
         title="A clean, standardized Lorry Receipt"
-        hint={<span className="inline-flex items-center gap-1 text-success"><FileCheck2 className="h-3.5 w-3.5" /> 12 fields · 96% confidence</span> as unknown as string}
+        hint={<span className="inline-flex items-center gap-1 text-success"><FileCheck2 className="h-3.5 w-3.5" /> 12 fields · 100% confidence</span> as unknown as string}
       />
 
       <div className="rounded-lg border border-border overflow-hidden">
@@ -160,41 +160,42 @@ function Stage3Verify() {
     {
       sev: "high" as const,
       title: "Weight mismatch across documents",
-      detail: "LR 12,400 kg · Invoice 11,800 kg · Difference 600 kg",
-      sub: "Resolve before dispatch — likely customs hold at border.",
+      detail: "Packing list 7,540 kg · Invoice 7,200 kg · Gap 340 kg",
+      sub: "Nepal customs will hold the truck at Raxaul. Fix before dispatch.",
     },
     {
       sev: "high" as const,
-      title: "Invoice value vs LC limit",
-      detail: "Invoice ₹ 8,42,000 · LC max ₹ 8,00,000",
-      sub: "LC will not honour the excess. Bank may reject.",
+      title: "LC value insufficient",
+      detail: "Invoice ₹ 6,91,080 · LC limit ₹ 6,50,000",
+      sub: "NIC Asia Bank will not honour excess. Amendment needed.",
     },
     {
       sev: "med" as const,
-      title: "GSTIN check digit invalid",
-      detail: "Consignor GSTIN failed Mod-36 validation",
-      sub: "Recheck the printed GSTIN on the invoice.",
+      title: "Notify party IEC missing",
+      detail: "Shree Chemicals — EXIM code not found in LC",
+      sub: "Required for Nepal customs clearance at Birgunj.",
     },
     {
       sev: "med" as const,
-      title: "Invoice number missing on copy 2",
-      detail: "Field blank in the second invoice page",
-      sub: "Customs may reject at border crossing.",
+      title: "E-way bill expiring before ETA",
+      detail: "Valid till 24 Nov · Estimated arrival 26 Nov",
+      sub: "Generate extension before the truck leaves.",
     },
     {
       sev: "low" as const,
-      title: "HSN format unusual",
-      detail: "5402.33 — verify against current customs schedule",
-      sub: "Soft warning. Verify at your end.",
+      title: "LUT ARN not found",
+      detail: "No Letter of Undertaking reference on invoice",
+      sub: "Required for zero-rated export. Verify with exporter.",
     },
   ];
 
   const passed = [
     "Vehicle number matches RTO format",
-    "Consignee address present on all docs",
-    "E-way bill validity active",
+    "GSTIN checksum valid",
+    "HSN 2811.22.00 verified against customs schedule",
     "Packing list matches invoice line items",
-    "Date sequence consistent",
+    "LC consignee correctly set to bank",
+    "Raxaul → Birgunj customs port mapped",
   ];
 
   return (

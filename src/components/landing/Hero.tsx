@@ -11,16 +11,16 @@ export function Hero() {
           <div className="lg:col-span-5 lg:pt-6">
             <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-secondary border border-border text-[11px] sm:text-xs text-muted-foreground mb-5">
               <span className="h-1.5 w-1.5 rounded-full bg-destructive animate-pulse" />
-              Trade document intelligence
+              India · Nepal · Bhutan · Bangladesh
             </div>
 
             <h1 className="text-[2rem] leading-[1.1] sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.05] font-semibold tracking-tight text-foreground mb-5">
-              Catch shipment errors before the truck moves.
+              Your bilty is ready before the driver is.
             </h1>
 
             <p className="text-base sm:text-lg text-muted-foreground max-w-xl mb-7 leading-relaxed">
-              Upload your invoice, packing list, e-way bill, LC.
-              Ability builds a clean Lorry Receipt (LR) and tells you exactly what's wrong.
+              Upload your invoice, packing list, e-way bill, and LC.
+              Ability reads every document, builds a clean LR, catches every mismatch — and explains it in plain language.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
@@ -66,7 +66,7 @@ function HeroMock() {
           <span className="h-2 w-2 rounded-full bg-success/60" />
         </div>
         <div className="text-[10px] sm:text-[11px] font-mono text-muted-foreground truncate">
-          ability · shipment SH-2847
+          ability · RRPL/25-26/1016 · India → Birgunj
         </div>
       </div>
 
@@ -80,10 +80,10 @@ function HeroMock() {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
             {[
-              { name: "invoice.pdf", tag: "Invoice", state: "ok" },
-              { name: "packing.pdf", tag: "Packing list", state: "ok" },
-              { name: "eway.jpg", tag: "E-way bill", state: "ok" },
-              { name: "lc_001.pdf", tag: "LC", state: "ok" },
+              { name: "RRPL_inv.pdf", tag: "Invoice", state: "ok" },
+              { name: "packing_list.pdf", tag: "Packing list", state: "ok" },
+              { name: "eway_bill.jpg", tag: "E-way bill", state: "ok" },
+              { name: "lc_nepal.pdf", tag: "LC", state: "ok" },
             ].map((d) => (
               <div
                 key={d.name}
@@ -108,12 +108,12 @@ function HeroMock() {
           </div>
           <div className="rounded-md border border-border bg-card divide-y divide-border">
             {[
-              ["Consignor", "Reliance Industries"],
-              ["Consignee", "Padma Textiles, Dhaka"],
-              ["Vehicle", "MH-04-AB-7821"],
-              ["Goods", "Polyester yarn"],
-              ["Weight", "12,400 kg"],
-              ["Invoice value", "₹ 8,42,000"],
+              ["Consignor", "Ratnaka Resins Pvt. Ltd."],
+              ["Consignee", "To The Order Of NIC Asia Bank"],
+              ["Vehicle", "DL-01-AB-4421"],
+              ["Goods", "Microsilica GR-92 (HSN 2811)"],
+              ["Gross weight", "7,540 kg"],
+              ["Invoice value", "₹ 6,91,080"],
             ].map(([k, v]) => (
               <div key={k} className="flex justify-between gap-3 px-2.5 py-1.5">
                 <span className="text-muted-foreground text-[11px]">{k}</span>

@@ -7,8 +7,8 @@ export function Quote() {
             The real problem
           </div>
           <p className="text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight text-foreground leading-[1.15]">
-            You don't lose money on the shipment.
-            <span className="block text-muted-foreground mt-2">You lose it on the document.</span>
+            The truck doesn't get held at Raxaul because the goods are wrong.
+            <span className="block text-muted-foreground mt-2">It gets held because the paperwork is.</span>
           </p>
         </div>
       </div>

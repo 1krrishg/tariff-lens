@@ -81,26 +81,26 @@ export function ImpactCounter() {
             Live impact
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-foreground leading-tight mb-3">
-            What Ability has saved transporters so far.
+            Time back. Money saved. Trucks moving.
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-            Preparing a clean Lorry Receipt — cross-checking invoice, packing list and e-way bill — usually takes around{" "}
+            Manually preparing a bilty — cross-checking invoice, packing list, LC, and e-way bill — takes a trained person around{" "}
             <span className="text-foreground font-medium">40 minutes</span>.
-            Ability does it in roughly{" "}
-            <span className="text-foreground font-medium">10 seconds</span>.
+            Ability does it in{" "}
+            <span className="text-foreground font-medium">under 30 seconds</span>.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <StatCard
             icon={<Clock className="h-4 w-4 text-primary" />}
-            label="Hours saved preparing Lorry Receipts"
+            label="Hours saved preparing bilties & LRs"
             value={formatINR(hours)}
             suffix="hrs"
           />
           <StatCard
             icon={<IndianRupee className="h-4 w-4 text-success" />}
-            label="Losses prevented from flagged errors"
+            label="Losses prevented from border rejections"
             value={`₹ ${formatINR(rupees)}`}
             suffix=""
           />
