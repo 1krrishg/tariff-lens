@@ -383,6 +383,22 @@ export default function ChatPage() {
     navigate(`/chat/${data.id}`);
   };
 
+  const handleModeSelect = async (mode: "transporter" | "exporter") => {
+    if (!userId) return;
+    const title = mode === "transporter" ? "New Bilty" : "Document Check";
+    const { data, error } = await supabase.from("conversations").insert({ title, user_id: userId }).select().single();
+    if (error) { toast({ title: "Error", description: "Failed to create conversation.", variant: "destructive" }); return; }
+    setConversations(prev => [data, ...prev]);
+
+    // Insert a hardcoded welcome — no AI call, no hallucination
+    const welcome = mode === "transporter"
+      ? "Ready to generate your bilty. Upload your **invoice** (required) and any of these: packing list, e-way bill, LC.\n\nAttach the files using the 📎 button and I'll extract everything and flag any issues."
+      : "Ready to check your documents. Upload your **invoice** plus any of: packing list, e-way bill, LC.\n\nI'll verify every field, catch cross-document mismatches, and flag corridor-specific compliance issues before you dispatch.";
+
+    await supabase.from("messages").insert({ conversation_id: data.id, role: "assistant", content: welcome, user_id: userId });
+    navigate(`/chat/${data.id}`);
+  };
+
   const fileToBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
       if (file.type === "application/pdf") {
@@ -787,7 +803,7 @@ export default function ChatPage() {
               {/* Mode cards */}
               <div className="grid grid-cols-2 gap-3 w-full">
                 <button
-                  onClick={() => handleNewConversation("I am a transporter. I need to upload shipment documents and generate a bilty / Lorry Receipt.")}
+                  onClick={() => handleModeSelect("transporter")}
                   className="group text-left rounded-xl border border-border bg-card hover:border-primary hover:shadow-md transition-all p-5"
                 >
                   <Truck className="h-6 w-6 text-primary mb-3" />
@@ -795,7 +811,7 @@ export default function ChatPage() {
                   <p className="text-xs text-muted-foreground leading-relaxed">Upload invoice, packing list, LC, e-way bill → get a clean LR with risk checks.</p>
                 </button>
                 <button
-                  onClick={() => handleNewConversation("I am an exporter. I need to check if my shipment documents are correct and compliant for cross-border trade.")}
+                  onClick={() => handleModeSelect("exporter")}
                   className="group text-left rounded-xl border border-border bg-card hover:border-primary hover:shadow-md transition-all p-5"
                 >
                   <Package className="h-6 w-6 text-primary mb-3" />
