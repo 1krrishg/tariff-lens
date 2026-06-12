@@ -10,32 +10,30 @@ export function Footer() {
             <Logo className="h-6" withWordmark />
           </div>
           <p className="text-muted-foreground text-xs leading-relaxed">
-            Trade Document Intelligence for transporters across India and the SAARC corridor.
+            Tariff risk simulation for US exporters. Know your exposure before you commit to a shipment.
           </p>
         </div>
         <div>
           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Product</div>
           <ul className="space-y-1.5 text-muted-foreground">
-            <li><a href="#features" className="hover:text-foreground">Features</a></li>
-            <li><a href="#risk" className="hover:text-foreground">Risk Analyzer</a></li>
-            <li><a href="#flow" className="hover:text-foreground">How it works</a></li>
-            <li><Link to="/app" className="hover:text-foreground">Open the tool</Link></li>
+            <li><a href="#how" className="hover:text-foreground">How it works</a></li>
+            <li><a href="#scenarios" className="hover:text-foreground">Tariff map</a></li>
+            <li><Link to="/simulate" className="hover:text-foreground">Simulate a shipment</Link></li>
           </ul>
         </div>
         <div>
-          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">For</div>
-          <ul className="space-y-1.5 text-muted-foreground">
-            <li>Transporters</li>
-            <li>Fleet operators</li>
-            <li>Customs brokers</li>
-            <li>Cross-border logistics</li>
+          <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Markets covered</div>
+          <ul className="space-y-1.5 text-muted-foreground text-xs">
+            <li>China · European Union</li>
+            <li>Canada · Mexico · Japan</li>
+            <li>India · and more</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-border">
         <div className="container mx-auto px-6 py-4 text-xs text-muted-foreground flex justify-between">
-          <span>© {new Date().getFullYear()} Ability</span>
-          <span>India · Bangladesh · Nepal · Bhutan</span>
+          <span>© {new Date().getFullYear()} TariffLens</span>
+          <span>Built for US exporters</span>
         </div>
       </div>
     </footer>

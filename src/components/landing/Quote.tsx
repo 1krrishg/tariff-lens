@@ -3,13 +3,12 @@ export function Quote() {
     <section className="relative py-16 sm:py-20 md:py-28 border-b border-border bg-secondary/40">
       <div className="container mx-auto px-5 sm:px-6">
         <div className="max-w-3xl">
-          <div className="text-xs font-medium uppercase tracking-wider text-primary mb-4">
-            The real problem
+          <blockquote className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground leading-snug mb-6">
+            "We didn't know China had a 25% retaliatory tariff on our soybeans until we were already committed to the shipment. That cost us $140,000 in margin."
+          </blockquote>
+          <div className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">Midwest soybean exporter</span> · $12M annual export volume
           </div>
-          <p className="text-2xl sm:text-3xl md:text-5xl font-semibold tracking-tight text-foreground leading-[1.15]">
-            The truck doesn't get held at Raxaul because the goods are wrong.
-            <span className="block text-muted-foreground mt-2">It gets held because the paperwork is.</span>
-          </p>
         </div>
       </div>
     </section>
