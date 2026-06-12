@@ -1,15 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Logo } from "@/components/Logo";
 
-const linkBase = "transition-colors";
+const linkBase = "transition-colors text-sm";
 const linkInactive = "text-muted-foreground hover:text-foreground";
-const linkActive = "text-foreground";
 
 export function NavBar() {
   const { pathname } = useLocation();
-  const onChat = pathname.startsWith("/chat");
-  const onApp = pathname.startsWith("/app") || pathname.startsWith("/bilty");
+  const onSim = pathname.startsWith("/simulate");
 
   return (
     <header className="sticky top-0 z-50 bg-background/85 backdrop-blur-md border-b border-border">
@@ -18,29 +16,15 @@ export function NavBar() {
           <Logo className="h-7" withWordmark />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm">
-          {!onChat && !onApp && (
-            <>
-              <a href="#demo" className={`${linkBase} ${linkInactive}`}>How it works</a>
-              <a href="#risks" className={`${linkBase} ${linkInactive}`}>What we flag</a>
-            </>
-          )}
-          <NavLink
-            to="/regulations"
-            className={({ isActive }) => `${linkBase} ${isActive ? linkActive : linkInactive}`}
-          >
-            Regulations
-          </NavLink>
-          <NavLink
-            to="/chat"
-            className={({ isActive }) => `${linkBase} ${isActive ? linkActive : linkInactive}`}
-          >
-            Open workspace
-          </NavLink>
-        </nav>
+        {!onSim && (
+          <nav className="hidden md:flex items-center gap-7 text-sm">
+            <a href="#how" className={`${linkBase} ${linkInactive}`}>How it works</a>
+            <a href="#scenarios" className={`${linkBase} ${linkInactive}`}>Scenarios</a>
+          </nav>
+        )}
 
         <Button asChild size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground flex-shrink-0">
-          <Link to="/auth">Try it</Link>
+          <Link to="/simulate">Simulate a shipment</Link>
         </Button>
       </div>
     </header>

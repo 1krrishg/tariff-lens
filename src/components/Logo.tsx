@@ -1,14 +1,8 @@
 type Props = {
   className?: string;
-  /** Show the wordmark next to the icon */
   withWordmark?: boolean;
 };
 
-/**
- * Ability logo — inline SVG so it stays crisp at every size and inherits
- * `currentColor` for theming. Icon is a document page with an upward
- * verification arrow, expressing "trade documents, verified".
- */
 export function Logo({ className = "h-8 w-auto", withWordmark = false }: Props) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
@@ -17,41 +11,23 @@ export function Logo({ className = "h-8 w-auto", withWordmark = false }: Props) 
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="h-full w-auto"
-        aria-label="Ability"
+        aria-label="TariffLens"
       >
-        {/* Document page with folded corner */}
-        <path
-          d="M7 4h12l6 6v18a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"
-          fill="hsl(var(--primary))"
-        />
-        {/* Folded corner highlight */}
-        <path
-          d="M19 4v4a2 2 0 0 0 2 2h4"
-          stroke="hsl(var(--primary-foreground))"
-          strokeOpacity="0.35"
-          strokeWidth="1.25"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        {/* Upward verification arrow */}
-        <path
-          d="M11 22l4-4 3 3 5-6"
-          stroke="hsl(var(--primary-foreground))"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M19 15h4v4"
-          stroke="hsl(var(--primary-foreground))"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
+        {/* Globe circle */}
+        <circle cx="16" cy="16" r="11" fill="hsl(var(--primary))" />
+        {/* Latitude lines */}
+        <path d="M5 16h22M7 10.5h18M7 21.5h18" stroke="hsl(var(--primary-foreground))" strokeOpacity="0.4" strokeWidth="1.2" strokeLinecap="round" />
+        {/* Longitude arc */}
+        <path d="M16 5c-3 3-3 18 0 22M16 5c3 3 3 18 0 22" stroke="hsl(var(--primary-foreground))" strokeOpacity="0.4" strokeWidth="1.2" />
+        {/* Magnifier */}
+        <circle cx="20" cy="20" r="5" fill="hsl(var(--background))" stroke="hsl(var(--primary))" strokeWidth="2" />
+        <line x1="24" y1="24" x2="27" y2="27" stroke="hsl(var(--primary))" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Dollar inside lens */}
+        <text x="20" y="23" textAnchor="middle" fontSize="5" fill="hsl(var(--primary))" fontWeight="700">$</text>
       </svg>
       {withWordmark && (
         <span className="text-base font-semibold tracking-tight text-foreground">
-          Ability
+          TariffLens
         </span>
       )}
     </span>
